@@ -36,19 +36,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var HitAndBlow = /** @class */ (function () {
-    function HitAndBlow() {
+    function HitAndBlow(mode) {
         this.answerSource = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
         this.answer = []; // 空配列のみだと中身に対しての型推論が働かないので型アノテーションが必要
         this.tryCount = 0;
+        this.mode = mode;
     }
     HitAndBlow.prototype.setting = function () {
-        var answerLength = 3;
+        var answerLength = this.getAnswerLength();
         while (this.answer.length < answerLength) {
             var randNum = Math.floor(Math.random() * this.answerSource.length);
             var selectedItem = this.answerSource[randNum];
             if (!this.answer.includes(selectedItem)) {
                 this.answer.push(selectedItem);
             }
+        }
+    };
+    HitAndBlow.prototype.getAnswerLength = function () {
+        switch (this.mode) {
+            case 'normal':
+                return 3;
+            case 'hard':
+                return 4;
         }
     };
     HitAndBlow.prototype.validate = function (inputArr) {
@@ -136,7 +145,7 @@ var promptInput = function (text) { return __awaiter(void 0, void 0, void 0, fun
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                hitAndBlow = new HitAndBlow();
+                hitAndBlow = new HitAndBlow('hard');
                 hitAndBlow.setting();
                 return [4 /*yield*/, hitAndBlow.play()];
             case 1:

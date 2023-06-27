@@ -2,15 +2,29 @@ class HitAndBlow {
     private readonly answerSource = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     private answer: string[] = [] // 空配列のみだと中身に対しての型推論が働かないので型アノテーションが必要
     private tryCount = 0
+    private mode: 'normal' | 'hard'
+
+    constructor(mode: 'normal' | 'hard') {
+        this.mode = mode
+    }
 
     setting() {
-        const answerLength = 3
+        const answerLength = this.getAnswerLength()
         while (this.answer.length < answerLength) {
             const randNum = Math.floor(Math.random() * this.answerSource.length)
             const selectedItem = this.answerSource[randNum]
             if(!this.answer.includes(selectedItem)) {
                 this.answer.push(selectedItem)
             }
+        }
+    }
+
+    private getAnswerLength() {
+        switch (this.mode) {
+            case 'normal':
+                return 3
+            case 'hard':
+                return 4
         }
     }
 
@@ -78,7 +92,7 @@ const promptInput = async (text: string) => {
 }
 
 ;(async () => {
-    const hitAndBlow = new HitAndBlow()
+    const hitAndBlow = new HitAndBlow('hard')
     hitAndBlow.setting()
     await hitAndBlow.play()
     hitAndBlow.end()
