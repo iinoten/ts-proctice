@@ -51,6 +51,13 @@ var HitAndBlow = /** @class */ (function () {
             }
         }
     };
+    HitAndBlow.prototype.validate = function (inputArr) {
+        var _this = this;
+        var isLengthValid = inputArr.length === this.answer.length;
+        var isAllAnswerSourceOption = inputArr.every(function (val) { return _this.answerSource.includes(val); });
+        var isAllDifferentValues = inputArr.every(function (val, i) { return inputArr.indexOf(val) === i; });
+        return isLengthValid && isAllAnswerSourceOption && isAllDifferentValues;
+    };
     HitAndBlow.prototype.play = function () {
         return __awaiter(this, void 0, void 0, function () {
             var inputArr, result;
@@ -60,19 +67,26 @@ var HitAndBlow = /** @class */ (function () {
                     case 1:
                         inputArr = (_a.sent()).split(',');
                         result = this.check(inputArr);
-                        if (!(result.hit !== this.answer.length)) return [3 /*break*/, 3];
+                        if (!!this.validate(inputArr)) return [3 /*break*/, 3];
+                        printLine('無効な入力です。');
+                        return [4 /*yield*/, this.play()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                    case 3:
+                        if (!(result.hit !== this.answer.length)) return [3 /*break*/, 5];
                         //不正解だったら続ける
                         printLine("---\nHit: " + result.hit + "\nBlow: " + result.blow + "\n---");
                         this.tryCount += 1;
                         return [4 /*yield*/, this.play()];
-                    case 2:
+                    case 4:
                         _a.sent();
-                        return [3 /*break*/, 4];
-                    case 3:
+                        return [3 /*break*/, 6];
+                    case 5:
                         // 正解だったら終了
                         this.tryCount += 1;
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
+                        _a.label = 6;
+                    case 6: return [2 /*return*/];
                 }
             });
         });
