@@ -46,6 +46,11 @@ class HitAndBlow {
             blow: blowCount,
         }
     }
+
+    end() {
+        printLine(`正解です！ \n試行回数: ${this.tryCount}回`)
+        process.exit()
+    }
 }
 
 const printLine = (text: string, breakLine: boolean = true) => {
@@ -64,6 +69,7 @@ const promptInput = async (text: string) => {
     const hitAndBlow = new HitAndBlow()
     hitAndBlow.setting()
     await hitAndBlow.play()
+    hitAndBlow.end()
 })()
 
 
