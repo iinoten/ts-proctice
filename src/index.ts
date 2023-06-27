@@ -6,7 +6,7 @@ class HitAndBlow {
     setting() {
         const answerLength = 3
         while (this.answer.length < answerLength) {
-            const randNum = Math.floor(Math.random() * this.answer.length)
+            const randNum = Math.floor(Math.random() * this.answerSource.length)
             const selectedItem = this.answerSource[randNum]
             if(!this.answer.includes(selectedItem)) {
                 this.answer.push(selectedItem)
@@ -54,7 +54,7 @@ class HitAndBlow {
 }
 
 const printLine = (text: string, breakLine: boolean = true) => {
-    process.stdout.write(text + (breakLine ? '/n' : ''))
+    process.stdout.write(text + (breakLine ? '\n' : ''))
 }
 
 const promptInput = async (text: string) => {
@@ -71,5 +71,6 @@ const promptInput = async (text: string) => {
     await hitAndBlow.play()
     hitAndBlow.end()
 })()
+
 
 
