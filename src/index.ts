@@ -1,6 +1,9 @@
 const modes = ['normal', 'hard'] as const 
 type Mode = typeof modes[number]
 
+const nextActions = ['play again', 'exit'] as const
+type nextAction = typeof nextActions[number]
+
 class GameProcedure {
     private currentGameTitle = 'hit and blow'
     private currentGame = new HitAndBlow()
@@ -14,7 +17,16 @@ class GameProcedure {
         await this.currentGame.setting()
         await this.currentGame.play()
         this.currentGame.end()
-        this.end()
+
+        const action = await promptSelect<nextAction>('ゲームを続けますか？', nextActions)
+        if (action === 'play again') {
+            await this.play()
+        } else if (action === 'exit') {
+            this.end()
+        } else {
+            const neverValue: never = action
+            throw new Error(`${neverValue} is an invalid action.`)
+        }
     }
 
     private end() {
@@ -59,6 +71,11 @@ class HitAndBlow {
         return isLengthValid && isAllAnswerSourceOption && isAllDifferentValues
     }
 
+    private reset() {
+        this.answer = []
+        this.tryCount = 0
+    }
+
     async play() {
         const inputArr = (await promptInput(`「,」区切りで${this.getAnswerLength()}つの数字を入力してください`)).split(',')
         const result = this.check(inputArr)
@@ -99,7 +116,7 @@ class HitAndBlow {
 
     end() {
         printLine(`正解です！ \n試行回数: ${this.tryCount}回`)
-        process.exit()
+        this.reset()
     }
 }
 
