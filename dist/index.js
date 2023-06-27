@@ -128,6 +128,11 @@ var GameProcedure = /** @class */ (function () {
     };
     return GameProcedure;
 }());
+var Game = /** @class */ (function () {
+    function Game() {
+    }
+    return Game;
+}());
 var HitAndBlow = /** @class */ (function () {
     function HitAndBlow() {
         this.answerSource = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
