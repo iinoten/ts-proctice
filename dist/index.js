@@ -58,6 +58,8 @@ var HitAndBlow = /** @class */ (function () {
                 return 3;
             case 'hard':
                 return 4;
+            default:
+                throw new Error(this.mode + " \u306F\u7121\u52B9\u306A\u30E2\u30FC\u30C9\u3067\u3059\u3002");
         }
     };
     HitAndBlow.prototype.validate = function (inputArr) {
@@ -72,7 +74,7 @@ var HitAndBlow = /** @class */ (function () {
             var inputArr, result;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, promptInput('「,」区切りで3つの数字を入力してください')];
+                    case 0: return [4 /*yield*/, promptInput("\u300C,\u300D\u533A\u5207\u308A\u3067" + this.getAnswerLength() + "\u3064\u306E\u6570\u5B57\u3092\u5165\u529B\u3057\u3066\u304F\u3060\u3055\u3044")];
                     case 1:
                         inputArr = (_a.sent()).split(',');
                         result = this.check(inputArr);

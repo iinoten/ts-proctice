@@ -1,10 +1,12 @@
+type Mode = 'normal' | 'hard'
+
 class HitAndBlow {
     private readonly answerSource = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     private answer: string[] = [] // 空配列のみだと中身に対しての型推論が働かないので型アノテーションが必要
     private tryCount = 0
-    private mode: 'normal' | 'hard'
+    private mode: Mode
 
-    constructor(mode: 'normal' | 'hard') {
+    constructor(mode: Mode) {
         this.mode = mode
     }
 
@@ -25,6 +27,8 @@ class HitAndBlow {
                 return 3
             case 'hard':
                 return 4
+            default:
+                throw new Error(`${this.mode} は無効なモードです。`)
         }
     }
 
@@ -36,7 +40,7 @@ class HitAndBlow {
     }
 
     async play() {
-        const inputArr = (await promptInput('「,」区切りで3つの数字を入力してください')).split(',')
+        const inputArr = (await promptInput(`「,」区切りで${this.getAnswerLength()}つの数字を入力してください`)).split(',')
         const result = this.check(inputArr)
         if (!this.validate(inputArr)) {
             printLine('無効な入力です。')
