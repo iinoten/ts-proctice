@@ -35,6 +35,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var HitAndBlow = /** @class */ (function () {
+    function HitAndBlow() {
+        this.answerSource = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        this.answer = [];
+        this.tryCount = 0;
+    }
+    return HitAndBlow;
+}());
 var printLine = function (text, breakLine) {
     if (breakLine === void 0) { breakLine = true; }
     process.stdout.write(text + (breakLine ? '/n' : ''));
@@ -53,7 +61,7 @@ var promptInput = function (text) { return __awaiter(void 0, void 0, void 0, fun
     });
 }); };
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var name, age;
+    var name, age, hitAndBlow;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, promptInput('名前を入力してください')];
@@ -65,6 +73,7 @@ var promptInput = function (text) { return __awaiter(void 0, void 0, void 0, fun
                 age = _a.sent();
                 console.log(age);
                 process.exit();
+                hitAndBlow = new HitAndBlow();
                 return [2 /*return*/];
         }
     });
