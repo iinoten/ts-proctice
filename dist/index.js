@@ -35,12 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var modes = ['normal', 'hard'];
 var HitAndBlow = /** @class */ (function () {
     function HitAndBlow() {
         this.answerSource = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
         this.answer = []; // 空配列のみだと中身に対しての型推論が働かないので型アノテーションが必要
         this.tryCount = 0;
-        this.mode = "normal";
+        this.mode = 'normal';
     }
     HitAndBlow.prototype.setting = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -49,7 +50,7 @@ var HitAndBlow = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         _a = this;
-                        return [4 /*yield*/, promptSelect('モードを入力してください。', ['normal', 'hard'])];
+                        return [4 /*yield*/, promptSelect('モードを入力してください。', modes)];
                     case 1:
                         _a.mode = (_b.sent());
                         answerLength = this.getAnswerLength();

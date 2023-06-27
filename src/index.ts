@@ -1,13 +1,14 @@
-type Mode = 'normal' | 'hard'
+const modes = ['normal', 'hard'] as const 
+type Mode = typeof modes[number]
 
 class HitAndBlow {
     private readonly answerSource = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     private answer: string[] = [] // 空配列のみだと中身に対しての型推論が働かないので型アノテーションが必要
     private tryCount = 0
-    private mode: Mode = "normal"
+    private mode: Mode = 'normal'
 
     async setting() {
-        this.mode = await promptSelect('モードを入力してください。', ['normal', 'hard']) as Mode
+        this.mode = await promptSelect<Mode>('モードを入力してください。', modes) as Mode
         const answerLength = this.getAnswerLength()
         while (this.answer.length < answerLength) {
             const randNum = Math.floor(Math.random() * this.answerSource.length)
@@ -89,18 +90,18 @@ const readLine = async () => {
     return input.trim()
 }
 
-const promptSelect = async (text: string, values: readonly string[]): Promise<string> => {
+const promptSelect = async <T extends string>(text: string, values: readonly string[]): Promise<T> => {
     printLine(`\n${text}`)
     values.forEach((value) => {
         printLine(`- ${value}`)
     })
     printLine('> ', false)
 
-    const input = await readLine()
+    const input = await readLine() as T
     if (values.includes(input)) {
         return input
     } else {
-        return promptSelect(text, values)
+        return promptSelect<T>(text, values)
     }
 }
 
