@@ -11,8 +11,7 @@ type JankenOption = typeof jankenOptions[number]
 const gameTitles = ['hit and blow', 'janken'] as const
 type GameTitle = typeof gameTitles[number]
 type GameStore = {
-    'hit and blow': HitAndBlow
-    'janken': Janken
+    [key in GameTitle]: HitAndBlow | Janken
 }
 
 class GameProcedure {
@@ -30,9 +29,6 @@ class GameProcedure {
             await promptSelect<GameTitle>('ゲームのタイトルを入力してください。', gameTitles)
         this.currentGame = this.gameStore[this.currentGameTitle]
     }
-
-
-
 
     public async play() {
         if (!this.currentGame) throw new Error('ゲームが選択されていません')
